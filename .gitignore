@@ -1,0 +1,9 @@
+Annotations/
+wkhtmltopdf/
+*.mha
+*.dcm
+*.nii.gz
+*.ipynb
+*.pdf
+*.png
+__pycache__/
