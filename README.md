@@ -15,13 +15,18 @@ Make sure the file names are the same as above. If you want different file names
 
 Lastly, just run the main.py file. 
 
-
-
 ### Folder structure Annotations folder: 
 
 The Annotations folder will contain separate folders for each week of annotation.    
 In each separate folder, the program will automatically create an images folder.    
 Make sure to remove the images once you no longer need them. 
+
+### Interpretation of the overlay colors in the top-right image of the pdf: 
+- Red: Any errors outside the other categories. 
+- Green: I overestimated intima on the inside.
+- Light green: I underestimated intima on the inside. 
+- Blue: I underestimated the media (either inside or outside)
+- Light blue: I overestimated the media (either inside or outside. )
 
 
 ### Required python libraries: 

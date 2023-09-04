@@ -32,8 +32,7 @@ def getOnePage(my_frame, rick_frame, oct_frame, imFolder, frame):
     makeImage(oct_frame, None, imName1)
 
     #The second image: the differences
-    diff_im = np.abs(np.copy(my_frame)-np.copy(rick_frame))
-    diff_im[diff_im>0]=1
+    diff_im = getDifferenceOverlay(my_frame,rick_frame)
     makeImage(oct_frame,diff_im,imName2)
 
     #The third image: Rick's annotation
@@ -44,9 +43,41 @@ def getOnePage(my_frame, rick_frame, oct_frame, imFolder, frame):
     ####################
     return imList
 
+
+def getDifferenceOverlay(my_frame,rick_frame):
+    diff_im = np.abs(np.copy(my_frame)-np.copy(rick_frame))
+    diff_im[diff_im>0]=1
+    diff_indices = np.argwhere(diff_im>0)
+    for i in diff_indices:
+        if rick_frame[i[0],i[1]] == 1 and my_frame[i[0],i[1]] == 3:
+            diff_im[i[0],i[1]] = 2
+
+        elif rick_frame[i[0],i[1]] == 3:
+            if my_frame[i[0],i[1]] == 1:
+                diff_im[i[0],i[1]] = 3
+            elif my_frame[i[0],i[1]] == 6:
+                diff_im[i[0],i[1]] = 5
+
+        elif rick_frame[i[0],i[1]] == 6:
+            if my_frame[i[0],i[1]] == 3:
+                diff_im[i[0],i[1]] = 4
+            elif my_frame[i[0],i[1]] == 0:
+                diff_im[i[0],i[1]] = 4#7
+        
+        elif rick_frame[i[0],i[1]] == 0 and my_frame[i[0],i[1]] == 6:
+            diff_im[i[0],i[1]] = 5#6 
+
+    return diff_im
+
+### From here is about the actual making of the image, not getting values
 def makeImage(frame,overlay,imName):
     if overlay is not None:
-        frame[overlay==1] = [255,0,0]
+        frame[overlay==1] = [255,0,0] #Red: Any errors outside the other categories. 
+        frame[overlay==2] = [0,204,0] #Green: I overestimated intima on the inside.
+        frame[overlay==3] = [102,255,102]#Light green: I underestimated intima on the inside. 
+        frame[overlay==4] = [0,0,255] #Blue: I underestimated the media (either inside or outside)
+        frame[overlay==5] = [0,255,255] #Light blue: I overestimated the media (either inside or outside. )
+
     data = im.fromarray(frame)
       
     # saving the final output 
