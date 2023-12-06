@@ -18,14 +18,15 @@ def getImages(my_array, rick_array, oct_array, frames, annFolder):
 
 def getOnePage(my_frame, rick_frame, oct_frame, imFolder, frame):
     #Some set-up:
-    imName1 = imFolder + f"{frame}_oct.png"
-    imName2 = imFolder + f"{frame}_difference.png"
-    imName3 = imFolder + f"{frame}_rick.png"
-    imName4 = imFolder + f"{frame}_mine.png"
-    label1 = f"Frame {frame}: OCT image"
-    label2 = f"Frame {frame}: Difference areas annotation"
-    label3 = f"Frame {frame}: Annotation Rick"
-    label4 = f"Frame {frame}: My own annotation"
+    textFrame = frame+1
+    imName1 = imFolder + f"{textFrame}_oct.png"
+    imName2 = imFolder + f"{textFrame}_difference.png"
+    imName3 = imFolder + f"{textFrame}_rick.png"
+    imName4 = imFolder + f"{textFrame}_mine.png"
+    label1 = f"Frame {textFrame}: OCT image"
+    label2 = f"Frame {textFrame}: Difference areas annotation"
+    label3 = f"Frame {textFrame}: Annotation Rick"
+    label4 = f"Frame {textFrame}: My own annotation"
     imList = [(imName1,label1),(imName2,label2),(imName3,label3),(imName4,label4)]
 
     #The first image: the base oct frame
@@ -56,16 +57,16 @@ def getDifferenceOverlay(my_frame,rick_frame):
             if my_frame[i[0],i[1]] == 1:
                 diff_im[i[0],i[1]] = 3
             elif my_frame[i[0],i[1]] == 6:
-                diff_im[i[0],i[1]] = 5
+                diff_im[i[0],i[1]] = 4
 
         elif rick_frame[i[0],i[1]] == 6:
             if my_frame[i[0],i[1]] == 3:
-                diff_im[i[0],i[1]] = 4
+                diff_im[i[0],i[1]] = 5
             elif my_frame[i[0],i[1]] == 0:
-                diff_im[i[0],i[1]] = 4#7
+                diff_im[i[0],i[1]] = 5#7
         
         elif rick_frame[i[0],i[1]] == 0 and my_frame[i[0],i[1]] == 6:
-            diff_im[i[0],i[1]] = 5#6 
+            diff_im[i[0],i[1]] = 4#6 
 
     return diff_im
 
@@ -75,8 +76,8 @@ def makeImage(frame,overlay,imName):
         frame[overlay==1] = [255,0,0] #Red: Any errors outside the other categories. 
         frame[overlay==2] = [0,204,0] #Green: I overestimated intima on the inside.
         frame[overlay==3] = [102,255,102]#Light green: I underestimated intima on the inside. 
-        frame[overlay==4] = [0,0,255] #Blue: I underestimated the media (either inside or outside)
-        frame[overlay==5] = [0,255,255] #Light blue: I overestimated the media (either inside or outside. )
+        frame[overlay==4] = [0,0,255] #Blue: I overestimated the media (either inside or outside)
+        frame[overlay==5] = [0,255,255] #Light blue: I underestimated the media (either inside or outside. )
 
     data = im.fromarray(frame)
       

@@ -1,7 +1,9 @@
-FOLDER_NAME = "Week_1"
-PDF_NAME = "Week_1_test.pdf"
-FRAMES = [1,41,81,121,161,201,241,281,321,332,361,401,441,481,521]
+FOLDER_NAME = "Week_5"
+PDF_NAME = "Week_5_testSet.pdf"
+FRAMES = [1,41,81,121,161,201,241,281,321,401]
 
-OCT_FILE = "oct.dcm"
-MY_FILE = "mine.nii.gz"
-RICK_FILE = "rick.nii.gz"
+OCT_FILE = "NLD-AMPH-0067.dcm"
+MY_FILE = "NLD-AMPH-0067_mine.nii.gz"
+RICK_FILE = "NLD-AMPH-0067_rick.nii.gz"
+
+
